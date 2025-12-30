@@ -4,6 +4,7 @@ namespace FitnessTracker.Services
 {
     public interface IWorkoutService
     {
-        IEnumerable<Workout> GetWorkouts();
+        Task<IEnumerable<Workout>> GetWorkoutsAsync();
+        Task AddWorkoutAsync(Workout workout);
     }
 }

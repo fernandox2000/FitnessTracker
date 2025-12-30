@@ -1,40 +1,29 @@
-﻿using FitnessTracker.Models;
+﻿using FitnessTracker.Data;
+using FitnessTracker.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessTracker.Services
 {
     public class WorkoutService : IWorkoutService
     {
-        public IEnumerable<Workout> GetWorkouts()
+        private readonly FitnessTrackerContext _context;
+
+        public WorkoutService(FitnessTrackerContext context)
         {
-            return new List<Workout>
-            {
-                new Workout
-                {
-                    Title = WorkoutTitle.Peito,
-                    Exercises = new List<Exercise>
-                    {
-                        new Exercise
-                        {
-                            Name = "Supino",
-                            Reps = 10,
-                            WeightInKg = 35
-                        }
-                    }
-                },
-                new Workout
-                {
-                    Title = WorkoutTitle.Pernas,
-                    Exercises = new List<Exercise>
-                    {
-                        new Exercise
-                        {
-                            Name = "Agachamento",
-                            Reps = 8,
-                            WeightInKg = 20
-                        }
-                    }
-                }
-            };
+            _context = context;
+        }
+
+        public async Task<IEnumerable<Workout>> GetWorkoutsAsync()
+        {
+            return await _context.Workouts
+                .Include(w => w.Exercises)
+                .ToListAsync();
+        }
+
+        public async Task AddWorkoutAsync(Workout workout)
+        {
+            _context.Workouts.Add(workout);
+            await _context.SaveChangesAsync();
         }
     }
 }

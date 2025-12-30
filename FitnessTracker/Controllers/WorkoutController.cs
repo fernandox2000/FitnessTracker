@@ -20,11 +20,17 @@ namespace FitnessTracker.Controllers
             _workoutService = workoutService;
         }
 
-        [HttpGet(Name = "GetWorkouts")]
-        public ActionResult<IEnumerable<Workout>> Get()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Workout>>> Get()
         {
-            var workouts = _workoutService.GetWorkouts();
-            return Ok(workouts);
+            return Ok(await _workoutService.GetWorkoutsAsync());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Workout workout)
+        {
+            await _workoutService.AddWorkoutAsync(workout);
+            return CreatedAtAction(nameof(Get), workout);
         }
 
     }
