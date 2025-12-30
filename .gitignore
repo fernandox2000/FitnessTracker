@@ -1,2 +1,6 @@
 *.vs
 [Dd]ebug*/
+
+# .NET build artifacts
+obj/
+bin/
