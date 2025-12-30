@@ -1,6 +1,6 @@
 using FitnessTracker.Models;
+using FitnessTracker.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.WebEncoders.Testing;
 
 namespace FitnessTracker.Controllers
 {
@@ -10,46 +10,21 @@ namespace FitnessTracker.Controllers
     {
 
         private readonly ILogger<WorkoutController> _logger;
+        private readonly IWorkoutService _workoutService;
 
-        public WorkoutController(ILogger<WorkoutController> logger)
+        public WorkoutController(
+            ILogger<WorkoutController> logger,
+            IWorkoutService workoutService)
         {
             _logger = logger;
+            _workoutService = workoutService;
         }
 
         [HttpGet(Name = "GetWorkouts")]
-        public IEnumerable<Workout> Get()
+        public ActionResult<IEnumerable<Workout>> Get()
         {
-            var workouts = new List<Workout>
-            {
-                new Workout
-                {
-                    Title = WorkoutTitle.Peito,
-                    Exercises = new List<Exercise>
-                    {
-                        new Exercise()
-                        {
-                            Name = "Supino",
-                            Reps = 10,
-                            WeightInKg = 35
-                        }
-                    }
-                },
-                new Workout()
-                {
-                    Title = WorkoutTitle.Pernas,
-                    Exercises = new List<Exercise>
-                    {
-                        new Exercise()
-                        {
-                            Name = "Agachamento",
-                            Reps = 8,
-                            WeightInKg = 20
-                        }
-                    }
-                }
-            };
-
-            return workouts;
+            var workouts = _workoutService.GetWorkouts();
+            return Ok(workouts);
         }
 
     }
