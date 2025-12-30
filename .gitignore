@@ -1,6 +1,5 @@
-*.vs
-[Dd]ebug*/
-
-# .NET build artifacts
+.vs/
+[Dd]ebug/
+[Rr]elease/
 obj/
 bin/
