@@ -3,3 +3,9 @@
 [Rr]elease/
 obj/
 bin/
+
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal

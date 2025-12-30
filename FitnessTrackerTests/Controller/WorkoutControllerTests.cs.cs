@@ -1,4 +1,4 @@
-namespace FitnessTrackerTests
+namespace FitnessTrackerTests.WorkoutControllerTests.cs
 {
     public class Tests
     {
