@@ -25,5 +25,29 @@ namespace FitnessTracker.Services
             _context.Workouts.Add(workout);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> DeleteWorkoutAsync(int workoutId)
+        {
+            var workout = await _context.Workouts.FindAsync(workoutId);
+
+            if (workout == null)
+                return false;
+
+            _context.Workouts.Remove(workout);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task UpdateWorkoutTitleAsync(int workoutId, WorkoutTitle title)
+        {
+            var workout = await _context.Workouts.FindAsync(workoutId);
+
+            if (workout == null)
+                throw new InvalidOperationException("Workout not found");
+
+            workout.Title = title;
+            await _context.SaveChangesAsync();
+        }
     }
 }

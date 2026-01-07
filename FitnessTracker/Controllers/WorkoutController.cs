@@ -33,5 +33,29 @@ namespace FitnessTracker.Controllers
             return CreatedAtAction(nameof(Get), workout);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _workoutService.DeleteWorkoutAsync(id);
+
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] WorkoutTitle title)
+        {
+            try
+            {
+                await _workoutService.UpdateWorkoutTitleAsync(id, title);
+                return NoContent();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

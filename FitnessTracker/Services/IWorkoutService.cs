@@ -6,5 +6,7 @@ namespace FitnessTracker.Services
     {
         Task<IEnumerable<Workout>> GetWorkoutsAsync();
         Task AddWorkoutAsync(Workout workout);
+        Task<bool> DeleteWorkoutAsync(int workoutId);
+        Task UpdateWorkoutTitleAsync(int workoutId, WorkoutTitle title);
     }
 }
