@@ -1,4 +1,5 @@
-﻿using FitnessTracker.Models;
+﻿using FitnessTracker.Enums;
+using FitnessTracker.Models;
 
 namespace FitnessTracker.Services
 {

@@ -1,9 +1,13 @@
-public enum WorkoutTitle
+namespace FitnessTracker.Enums
 {
-    Peito,
-    Costas,
-    Pernas,
-    Ombros,
-    Abdominais,
-    Mix
+    public enum WorkoutTitle
+    {
+        None = 0,
+        Peito,
+        Costas,
+        Pernas,
+        Ombros,
+        Abdominais,
+        Mix
+    }
 }

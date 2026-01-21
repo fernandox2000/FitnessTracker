@@ -1,4 +1,5 @@
 ﻿using FitnessTracker.Data;
+using FitnessTracker.Enums;
 using FitnessTracker.Models;
 using Microsoft.EntityFrameworkCore;
 

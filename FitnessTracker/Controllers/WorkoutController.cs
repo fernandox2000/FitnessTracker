@@ -1,3 +1,4 @@
+using FitnessTracker.Enums;
 using FitnessTracker.Models;
 using FitnessTracker.Services;
 using Microsoft.AspNetCore.Mvc;
