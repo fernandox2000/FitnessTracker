@@ -9,5 +9,6 @@ namespace FitnessTracker.Services
         Task AddWorkoutAsync(Workout workout);
         Task<bool> DeleteWorkoutAsync(int workoutId);
         Task UpdateWorkoutTitleAsync(int workoutId, WorkoutTitle title);
+        Task DeleteAllWorkouts();
     }
 }

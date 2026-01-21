@@ -9,10 +9,7 @@ namespace FitnessTracker.Services
     {
         private readonly FitnessTrackerContext _context;
 
-        public WorkoutService(FitnessTrackerContext context)
-        {
-            _context = context;
-        }
+        public WorkoutService(FitnessTrackerContext context) => _context = context;
 
         public async Task<IEnumerable<Workout>> GetWorkoutsAsync()
         {
@@ -49,6 +46,12 @@ namespace FitnessTracker.Services
 
             workout.Title = title;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAllWorkouts()
+        {
+            await _context.Exercises.ExecuteDeleteAsync();
+            await _context.Workouts.ExecuteDeleteAsync();
         }
     }
 }

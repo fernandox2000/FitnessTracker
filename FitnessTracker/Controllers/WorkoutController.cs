@@ -1,3 +1,4 @@
+using FitnessTracker.DTOs;
 using FitnessTracker.Enums;
 using FitnessTracker.Models;
 using FitnessTracker.Services;
@@ -28,10 +29,23 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Workout workout)
+        public async Task<IActionResult> Post([FromBody] CreateWorkoutDto dto)
         {
+            var workout = new Workout
+            {
+                Title = dto.Title,
+                Exercises = dto.Exercises.Select(e => new Exercise
+                {
+                    Name = e.Name,
+                    Reps = e.Reps,
+                    Series = e.Series,
+                    WeightInKg = e.WeightInKg
+                }).ToList()
+            };
+
             await _workoutService.AddWorkoutAsync(workout);
-            return CreatedAtAction(nameof(Get), workout);
+
+            return CreatedAtAction(nameof(Get), new { id = workout.Id }, workout);
         }
 
         [HttpDelete("{id}")]
@@ -57,6 +71,14 @@ namespace FitnessTracker.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpDelete()]       
+        public async Task<IActionResult> DeleteAllWorkouts()
+        {
+            await _workoutService.DeleteAllWorkouts();
+
+            return NoContent();
         }
     }
 }
