@@ -25,7 +25,19 @@ namespace FitnessTracker.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Workout>>> Get()
         {
-            return Ok(await _workoutService.GetWorkoutsAsync());
+            var workouts = await _workoutService.GetWorkoutsAsync();
+            return Ok(workouts);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Workout>> GetById(int id)
+        {
+            var workout = await _workoutService.GetWorkoutByIdAsync(id);
+
+            if (workout == null)
+                return NotFound();
+
+            return Ok(workout);
         }
 
         [HttpPost]
@@ -73,7 +85,7 @@ namespace FitnessTracker.Controllers
             }
         }
 
-        [HttpDelete()]       
+        [HttpDelete()]
         public async Task<IActionResult> DeleteAllWorkouts()
         {
             await _workoutService.DeleteAllWorkouts();

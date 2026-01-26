@@ -18,6 +18,13 @@ namespace FitnessTracker.Services
                 .ToListAsync();
         }
 
+        public async Task<Workout?> GetWorkoutByIdAsync(int workoutId)
+        {
+            return await _context.Workouts
+                .Include(w => w.Exercises)
+                .FirstOrDefaultAsync(w => w.Id == workoutId);
+        }
+
         public async Task AddWorkoutAsync(Workout workout)
         {
             _context.Workouts.Add(workout);
