@@ -46,5 +46,36 @@ namespace FitnessTrackerTests.Services
             Assert.That(workoutsInDb.Count, Is.EqualTo(1));
             Assert.That(workoutsInDb[0].Title, Is.EqualTo(WorkoutTitle.Peito));
         }
+
+        [Test]
+        public async Task GetWorkoutAsync_ShouldReturnWorkouts()
+        {
+            // Arrange
+            var workout = new Workout
+            {
+                Title = WorkoutTitle.Peito,
+                Exercises = new List<Exercise>
+                {
+                    new Exercise
+                    {
+                        Name = ExerciseName.SupinoReto,
+                        Reps = 10,
+                        Series = 3,
+                        WeightInKg = 40
+                    }
+                }
+            };
+            _context.Workouts.Add(workout);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _workoutService.GetWorkoutsAsync();
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result.First().Title, Is.EqualTo(WorkoutTitle.Peito));
+            Assert.That(result.First().Exercises.Count, Is.EqualTo(1));
+        }
     }
 }
