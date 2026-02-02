@@ -6,7 +6,6 @@ namespace FitnessTracker.DTOs
     {
         public WorkoutTitle Title { get; set; } = WorkoutTitle.Peito;
 
-        public List<CreateExerciseDto> Exercises { get; set; }
-            = new() { new CreateExerciseDto() };
+        public List<CreateExerciseDto> Exercises { get; set; } = new();
     }
 }

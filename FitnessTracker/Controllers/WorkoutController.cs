@@ -1,5 +1,6 @@
 using FitnessTracker.DTOs;
 using FitnessTracker.Enums;
+using FitnessTracker.Factories;
 using FitnessTracker.Models;
 using FitnessTracker.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,16 @@ namespace FitnessTracker.Controllers
 
         private readonly ILogger<WorkoutController> _logger;
         private readonly IWorkoutService _workoutService;
+        private readonly IWorkoutFactory _workoutFactory;
 
         public WorkoutController(
             ILogger<WorkoutController> logger,
-            IWorkoutService workoutService)
+            IWorkoutService workoutService,
+            IWorkoutFactory workoutFactory)
         {
             _logger = logger;
             _workoutService = workoutService;
+            _workoutFactory = workoutFactory;
         }
 
         [HttpGet]
@@ -43,21 +47,11 @@ namespace FitnessTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateWorkoutDto dto)
         {
-            var workout = new Workout
-            {
-                Title = dto.Title,
-                Exercises = dto.Exercises.Select(e => new Exercise
-                {
-                    Name = e.Name,
-                    Reps = e.Reps,
-                    Series = e.Series,
-                    WeightInKg = e.WeightInKg
-                }).ToList()
-            };
+            var workout = _workoutFactory.CreateWorkout(dto);
 
             await _workoutService.AddWorkoutAsync(workout);
 
-            return CreatedAtAction(nameof(Get), new { id = workout.Id }, workout);
+            return CreatedAtAction(nameof(GetById), new { id = workout.Id }, workout);
         }
 
         [HttpDelete("{id}")]

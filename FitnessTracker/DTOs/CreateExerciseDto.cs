@@ -1,15 +1,20 @@
 ﻿using FitnessTracker.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace FitnessTracker.DTOs
 {
     public class CreateExerciseDto
     {
-        public ExerciseName Name { get; set; } = ExerciseName.SupinoReto;
+        [Required]
+        public ExerciseName Name { get; set; }
 
-        public int Reps { get; set; } = 12;
+        [Range(1, 100)]
+        public int Reps { get; set; }
 
-        public int Series { get; set; } = 3;
+        [Range(1, 20)]
+        public int Series { get; set; }
 
-        public double WeightInKg { get; set; } = 0;
+        [Range(0, 1000)]
+        public double WeightInKg { get; set; }
     }
 }
